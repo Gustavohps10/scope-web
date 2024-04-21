@@ -1,0 +1,11 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.ts",
+  "repository": "https://github.com/Gustavohps10/scope-web",
+  "author": "Gustavo Henrique",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^5.4.5"
+  }
+}
