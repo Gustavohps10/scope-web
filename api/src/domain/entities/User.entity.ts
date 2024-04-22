@@ -5,7 +5,10 @@ export type UserProps = {
 }
 
 export class User {
-    constructor(public props: UserProps){};
+    public readonly id?: number;
+    constructor(public props: UserProps, id?: number){
+        this.id = id || undefined
+    };
 
     updateName(name: string){
         this.name = name
