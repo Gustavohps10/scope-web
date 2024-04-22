@@ -8,7 +8,10 @@ export type BudgetItemProps = {
 }
 
 export class BudgetItem {
-    constructor (public props: BudgetItemProps){}
+    public readonly id?: number;
+    constructor(public props: BudgetItemProps, id?: number){
+        this.id = id || undefined
+    };
 
     get budgetId(){
         return this.props.budgetId;
