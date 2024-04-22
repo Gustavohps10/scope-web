@@ -6,7 +6,10 @@ export type BudgetProps = {
 }
 
 export class Budget {
-    constructor(public props: BudgetProps){}
+    public readonly id?: number;
+    constructor(public props: BudgetProps, id?: number){
+        this.id = id || undefined
+    };
 
     updateCustomer(customerId: number){
         this.customerId = customerId;
