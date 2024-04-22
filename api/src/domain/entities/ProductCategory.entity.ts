@@ -3,7 +3,10 @@ export type ProductCategoryProps = {
 }
 
 export class ProductCategory {
-    constructor(public props: ProductCategoryProps){}
+    public readonly id?: number;
+    constructor(public props: ProductCategoryProps, id?: number){
+        this.id = id || undefined
+    };
 
     updateDescription(description: string){
         this.description = description
