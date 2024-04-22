@@ -5,7 +5,10 @@ export type CustomerProps = {
 }
 
 export class Customer {
-    constructor(public props: CustomerProps){}
+    public readonly id?: number;
+    constructor(public props: CustomerProps, id?: number){
+        this.id = id || undefined
+    };
 
     updateName(name: string){
         this.name = name
