@@ -8,7 +8,10 @@ export type ProductProps = {
 }
 
 export class Product {
-    constructor(public props: ProductProps){}
+    public readonly id?: number;
+    constructor(public props: ProductProps, id?: number){
+        this.id = id || undefined
+    };
 
     updateCategory(categoryId: number){
         this.categoryId = categoryId
