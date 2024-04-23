@@ -1,7 +1,7 @@
 {
   "name": "api",
   "version": "1.0.0",
-  "main": "index.ts",
+  "main": "main/server.ts",
   "repository": "https://github.com/Gustavohps10/scope-web",
   "author": "Gustavo Henrique",
   "license": "MIT",
