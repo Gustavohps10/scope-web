@@ -8,6 +8,7 @@ export class CreateUserService implements CreateUserUseCase{
 
     async execute(userProps: UserDTO): Promise<void>{
         const user = new User(userProps);
+        user.updatePassword('2222');
         return await this.userRepository.insert(user);
     }
 }

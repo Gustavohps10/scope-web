@@ -1,3 +1,8 @@
-import { User } from "../../domain/entities/User.entity";
+import { UserProps } from "../../domain/entities/User.entity";
 
-export type UserDTO = User
+export type UserDTO = {
+    id?: number;
+    name: string;
+    email: string;
+    password: string;
+}
