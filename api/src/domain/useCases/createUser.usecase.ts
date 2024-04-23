@@ -1,5 +1,5 @@
-import { User, UserProps } from "../entities/User.entity";
+import { User } from "../entities/User.entity";
 
 export interface CreateUserUseCase {
-    execute: (props: UserProps) => Promise<void>
+    execute: (user: User) => Promise<void>
 }
