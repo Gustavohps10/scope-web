@@ -12,3 +12,62 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model CATEGORIA_PRODUTO {
+  CATEGORIAPRODUTOID   Int       @id @default(autoincrement())
+  DS_CATEGORIA_PRODUTO String    @db.VarChar(50)
+  PRODUTO              PRODUTO[]
+}
+
+model PRODUTO {
+  PRODUTOID           Int      @id @default(autoincrement())
+  DS_PRODUTO          String   @db.VarChar(50)
+  OBS_PRODUTO         String   @db.VarChar(300)
+  VL_VENDA_PRODUTO    Float
+  DT_CADASTRO_PRODUTO DateTime @db.Timestamp
+  STATUS_PRODUTO      String   @db.VarChar(10)
+
+  CATEGORIAPRODUTOID Int
+  CATEGORIA          CATEGORIA_PRODUTO @relation(fields: [CATEGORIAPRODUTOID], references: [CATEGORIAPRODUTOID])
+  ORCAMENTO_ITEM     ORCAMENTO_ITEM[]
+}
+
+model CLIENTE {
+  CLIENTEID        Int         @id @default(autoincrement())
+  TIPO_CLIENTE     String      @db.Char(1)
+  CPF_CNPJ_CLIENTE String      @db.VarChar(18)
+  NOME_CLIENTE     String      @db.VarChar(100)
+  ORCAMENTO        ORCAMENTO[]
+}
+
+model USUARIOS {
+  ID            Int    @id @default(autoincrement())
+  USUARIO       String @db.VarChar(30)
+  NOME_COMPLETO String @db.VarChar(60)
+  SENHA         String @db.VarChar(50)
+}
+
+model ORCAMENTO {
+  ORCAMENTOID           Int      @id @default(autoincrement())
+  DT_ORCAMENTO          DateTime @db.Timestamp
+  DT_VALIDADE_ORCAMENTO DateTime @db.Timestamp
+  VL_TOTAL_ORCAMENTO    Float
+
+  CLIENTEID      Int
+  CLIENTE        CLIENTE          @relation(fields: [CLIENTEID], references: [CLIENTEID])
+  ORCAMENTO_ITEM ORCAMENTO_ITEM[]
+}
+
+model ORCAMENTO_ITEM {
+  ORCAMENTOITEMID Int    @id @default(autoincrement())
+  PRODUTODESC     String @db.VarChar(50)
+  QT_PRODUTO      Float
+  VL_UNITARIO     Float
+  VL_TOTAL        Float
+
+  ORCAMENTOID Int
+  ORCAMENTO   ORCAMENTO @relation(fields: [ORCAMENTOID], references: [ORCAMENTOID])
+  
+  PRODUTOID   Int
+  PRODUTO     PRODUTO   @relation(fields: [PRODUTOID], references: [PRODUTOID])
+}
