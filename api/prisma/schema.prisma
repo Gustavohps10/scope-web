@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model categoria_produto {
+  CATEGORIAPRODUTOID   Int       @id @default(autoincrement())
+  DS_CATEGORIA_PRODUTO String    @db.VarChar(50)
+  PRODUTO              produto[]
+}
+
+model produto {
+  PRODUTOID           Int      @id @default(autoincrement())
+  DS_PRODUTO          String   @db.VarChar(50)
+  OBS_PRODUTO         String   @db.VarChar(300)
+  VL_VENDA_PRODUTO    Float
+  DT_CADASTRO_PRODUTO DateTime @db.Timestamp
+  STATUS_PRODUTO      String   @db.VarChar(10)
+
+  CATEGORIAPRODUTOID Int
+  CATEGORIA          categoria_produto @relation(fields: [CATEGORIAPRODUTOID], references: [CATEGORIAPRODUTOID])
+  ORCAMENTO_ITEM     orcamento_item[]
+}
+
+model cliente {
+  CLIENTEID        Int         @id @default(autoincrement())
+  TIPO_CLIENTE     String      @db.Char(1)
+  CPF_CNPJ_CLIENTE String      @db.VarChar(18)
+  NOME_CLIENTE     String      @db.VarChar(100)
+  ORCAMENTO        orcamento[]
+}
+
+model usuarios {
+  ID            Int    @id @default(autoincrement())
+  USUARIO       String @db.VarChar(30)
+  NOME_COMPLETO String @db.VarChar(60)
+  SENHA         String @db.VarChar(50)
+}
+
+model orcamento {
+  ORCAMENTOID           Int      @id @default(autoincrement())
+  DT_ORCAMENTO          DateTime @db.Timestamp
+  DT_VALIDADE_ORCAMENTO DateTime @db.Timestamp
+  VL_TOTAL_ORCAMENTO    Float
+
+  CLIENTEID      Int
+  CLIENTE        cliente          @relation(fields: [CLIENTEID], references: [CLIENTEID])
+  ORCAMENTO_ITEM orcamento_item[]
+}
+
+model orcamento_item {
+  ORCAMENTOITEMID Int    @id @default(autoincrement())
+  PRODUTODESC     String @db.VarChar(50)
+  QT_PRODUTO      Float
+  VL_UNITARIO     Float
+  VL_TOTAL        Float
+
+  ORCAMENTOID Int
+  ORCAMENTO   orcamento @relation(fields: [ORCAMENTOID], references: [ORCAMENTOID])
+  
+  PRODUTOID   Int
+  PRODUTO     produto   @relation(fields: [PRODUTOID], references: [PRODUTOID])
+}
