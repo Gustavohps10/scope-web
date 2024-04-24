@@ -5,6 +5,6 @@ export class FindUserByIdService implements FindUserByIdUseCase{
     constructor(private readonly userRepository: UserRepository){}
 
     async execute(id: number): Promise<FindUserOutput>{
-        return this.userRepository.findById(id);
+        return this.userRepository.findById(Number(id));
     }
 }

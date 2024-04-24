@@ -14,7 +14,7 @@ export class UserPrismaRepo implements UserRepository {
         })
     }
 
-    async findById(id: number): Promise<UserDTO> {
+    async findById(id: number): Promise<Required<UserDTO>> {
         const user = await prisma.usuarios.findUniqueOrThrow({
             where: {
               ID: id
@@ -29,7 +29,7 @@ export class UserPrismaRepo implements UserRepository {
         //await prisma.$disconnect()
     }
 
-    async findAll(): Promise<UserDTO[]> {
+    async findAll(): Promise<Required<UserDTO[]>> {
         const users = await prisma.usuarios.findMany();
         return users.map(user =>({
             id: user.ID,

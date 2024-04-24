@@ -13,8 +13,7 @@ export class FindUserByIdController implements Controller{
             const viewModel = {
                 id: user.id,
                 name: user.name,
-                email: user.email,
-                password: user.password
+                email: user.email
             }
             return ok(viewModel);
         } catch (error) {
