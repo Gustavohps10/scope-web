@@ -13,13 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model CATEGORIA_PRODUTO {
+model categoria_produto {
   CATEGORIAPRODUTOID   Int       @id @default(autoincrement())
   DS_CATEGORIA_PRODUTO String    @db.VarChar(50)
-  PRODUTO              PRODUTO[]
+  PRODUTO              produto[]
 }
 
-model PRODUTO {
+model produto {
   PRODUTOID           Int      @id @default(autoincrement())
   DS_PRODUTO          String   @db.VarChar(50)
   OBS_PRODUTO         String   @db.VarChar(300)
@@ -28,37 +28,37 @@ model PRODUTO {
   STATUS_PRODUTO      String   @db.VarChar(10)
 
   CATEGORIAPRODUTOID Int
-  CATEGORIA          CATEGORIA_PRODUTO @relation(fields: [CATEGORIAPRODUTOID], references: [CATEGORIAPRODUTOID])
-  ORCAMENTO_ITEM     ORCAMENTO_ITEM[]
+  CATEGORIA          categoria_produto @relation(fields: [CATEGORIAPRODUTOID], references: [CATEGORIAPRODUTOID])
+  ORCAMENTO_ITEM     orcamento_item[]
 }
 
-model CLIENTE {
+model cliente {
   CLIENTEID        Int         @id @default(autoincrement())
   TIPO_CLIENTE     String      @db.Char(1)
   CPF_CNPJ_CLIENTE String      @db.VarChar(18)
   NOME_CLIENTE     String      @db.VarChar(100)
-  ORCAMENTO        ORCAMENTO[]
+  ORCAMENTO        orcamento[]
 }
 
-model USUARIOS {
+model usuarios {
   ID            Int    @id @default(autoincrement())
   USUARIO       String @db.VarChar(30)
   NOME_COMPLETO String @db.VarChar(60)
   SENHA         String @db.VarChar(50)
 }
 
-model ORCAMENTO {
+model orcamento {
   ORCAMENTOID           Int      @id @default(autoincrement())
   DT_ORCAMENTO          DateTime @db.Timestamp
   DT_VALIDADE_ORCAMENTO DateTime @db.Timestamp
   VL_TOTAL_ORCAMENTO    Float
 
   CLIENTEID      Int
-  CLIENTE        CLIENTE          @relation(fields: [CLIENTEID], references: [CLIENTEID])
-  ORCAMENTO_ITEM ORCAMENTO_ITEM[]
+  CLIENTE        cliente          @relation(fields: [CLIENTEID], references: [CLIENTEID])
+  ORCAMENTO_ITEM orcamento_item[]
 }
 
-model ORCAMENTO_ITEM {
+model orcamento_item {
   ORCAMENTOITEMID Int    @id @default(autoincrement())
   PRODUTODESC     String @db.VarChar(50)
   QT_PRODUTO      Float
@@ -66,8 +66,8 @@ model ORCAMENTO_ITEM {
   VL_TOTAL        Float
 
   ORCAMENTOID Int
-  ORCAMENTO   ORCAMENTO @relation(fields: [ORCAMENTOID], references: [ORCAMENTOID])
+  ORCAMENTO   orcamento @relation(fields: [ORCAMENTOID], references: [ORCAMENTOID])
   
   PRODUTOID   Int
-  PRODUTO     PRODUTO   @relation(fields: [PRODUTOID], references: [PRODUTOID])
+  PRODUTO     produto   @relation(fields: [PRODUTOID], references: [PRODUTOID])
 }
