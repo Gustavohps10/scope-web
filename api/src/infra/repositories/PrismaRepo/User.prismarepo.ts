@@ -1,11 +1,17 @@
-import { UserRepository } from "../../data/contracts/userRepository";
-import { UserDTO } from "../../data/dto/UserDTO";
+import { UserRepository } from "../../../data/contracts/userRepository";
+import { UserDTO } from "../../../data/dto/UserDTO";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient()
 
-export class PrismaRepository implements UserRepository {
+export class UserPrismaRepo implements UserRepository {
     async insert(userProps: UserDTO): Promise<void> {
-
+        await prisma.usuarios.create({
+            data: {
+              NOME_COMPLETO: userProps.name,
+              USUARIO: userProps.email,
+              SENHA: userProps.password
+            }
+        })
     }
 
     async findById(id: number): Promise<UserDTO> {
