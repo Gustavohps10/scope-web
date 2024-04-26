@@ -44,7 +44,7 @@ model usuarios {
   ID            Int    @id @default(autoincrement())
   USUARIO       String @db.VarChar(30)
   NOME_COMPLETO String @db.VarChar(60)
-  SENHA         String @db.VarChar(50)
+  SENHA         String @db.VarChar(255)
 }
 
 model orcamento {
