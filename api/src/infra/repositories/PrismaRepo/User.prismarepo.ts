@@ -40,7 +40,16 @@ export class UserPrismaRepo implements UserRepository {
     }
 
     async edit(userProps: UserDTO): Promise<void> {
-
+        await prisma.usuarios.update({
+            data: {
+                NOME_COMPLETO: userProps.name,
+                USUARIO: userProps.email,
+                SENHA: userProps.password
+            },
+            where: {
+                ID: userProps.id
+            }
+        })
     }
 
     async delete(id: number): Promise<void> {
