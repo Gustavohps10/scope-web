@@ -1,5 +1,5 @@
 export type CustomerDTO = {
-    id?: string
+    id?: number
     name: string
     cpfcnpj: string
     customerType: string
