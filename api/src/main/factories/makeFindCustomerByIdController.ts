@@ -3,7 +3,7 @@ import { CustomerPrismaRepo } from "../../infra/repositories/PrismaRepo/Customer
 import { Controller } from "../../presentation/contracts/controller";
 import { FindCustomerByIdController } from "../../presentation/controllers/FindCustomerByIdController";
 
-export default (): Controller =>{
+export const makeFindCustomerByIdController = (): Controller =>{
     const repo = new CustomerPrismaRepo();
     const service = new FindCustomerByIdService(repo);
     const controller = new FindCustomerByIdController(service);
