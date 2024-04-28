@@ -35,7 +35,11 @@ export class ProductPrismaRepo implements ProductRepository {
     }
 
     async findById(id: number): Promise<Required<ProductDTO>> {
-        const product = await prisma.produto.findFirstOrThrow();
+        const product = await prisma.produto.findUniqueOrThrow({
+            where: {
+                PRODUTOID: id
+            }
+        })
         return {
             id: product.PRODUTOID,
             description: product.DS_PRODUTO,
