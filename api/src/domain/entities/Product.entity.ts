@@ -3,7 +3,7 @@ export type ProductProps = {
     description: string;
     observation: string;
     saleValue: number;
-    status: "active" | "inactive";
+    status: "ACTIVE" | "INACTIVE";
     createdAt: Date;
 }
 
@@ -29,7 +29,7 @@ export class Product {
         this.saleValue = saleValue
     }
 
-    updateStatus(status: "active" | "inactive"){
+    updateStatus(status: "ACTIVE" | "INACTIVE"){
         this.status = status
     }
 
@@ -69,7 +69,7 @@ export class Product {
         return this.props.status
     }
 
-    private set status(status: "active" | "inactive"){
+    private set status(status: "ACTIVE" | "INACTIVE"){
         this.props.status = status
     }
 
