@@ -6,7 +6,7 @@ test('updateCategory method', ()=>{
         description: "Chapa Metalica",
         observation: "Lorem ipsum",
         saleValue: 122.50,
-        status: "active",
+        status: "ACTIVE",
         createdAt: new Date
     }
 
@@ -22,7 +22,7 @@ test('updateDescription method', ()=>{
         description: "Chapa Metalica",
         observation: "Lorem ipsum",
         saleValue: 122.50,
-        status: "active",
+        status: "ACTIVE",
         createdAt: new Date
     }
 
@@ -38,7 +38,7 @@ test('updateObservation method', ()=>{
         description: "Chapa Metalica",
         observation: "Lorem ipsum",
         saleValue: 122.50,
-        status: "active",
+        status: "ACTIVE",
         createdAt: new Date
     }
 
@@ -54,7 +54,7 @@ test('updateSaleValue method', ()=>{
         description: "Chapa Metalica",
         observation: "Lorem ipsum",
         saleValue: 122.50,
-        status: "active",
+        status: "ACTIVE",
         createdAt: new Date
     }
 
@@ -70,14 +70,14 @@ test('updateStatus method', ()=>{
         description: "Chapa Metalica",
         observation: "Lorem ipsum",
         saleValue: 122.50,
-        status: "active",
+        status: "ACTIVE",
         createdAt: new Date
     }
 
     const product = new Product(productProps);
-    product.updateStatus("inactive")
+    product.updateStatus("INACTIVE")
 
-    expect(product.status).toBe("inactive");
+    expect(product.status).toBe("INACTIVE");
 });
 
 

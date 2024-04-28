@@ -9,8 +9,8 @@ export class ProductPrismaRepo implements ProductRepository {
             data: {
                 DS_PRODUTO: productProps.description,
                 OBS_PRODUTO: productProps.observation,
-                VL_VENDA_PRODUTO: productProps.price,
-                DT_CADASTRO_PRODUTO: productProps.createAt,
+                VL_VENDA_PRODUTO: productProps.saleValue,
+                DT_CADASTRO_PRODUTO: productProps.createdAt,
                 STATUS_PRODUTO: productProps.status,
                 CATEGORIA: {
                     connect:{
@@ -27,9 +27,9 @@ export class ProductPrismaRepo implements ProductRepository {
         id: product.PRODUTOID,
         description: product.DS_PRODUTO,
         observation: product.OBS_PRODUTO,
-        price: product.VL_VENDA_PRODUTO,
+        saleValue: product.VL_VENDA_PRODUTO,
         status: product.STATUS_PRODUTO as "ACTIVE" | "INACTIVE",
-        createAt: product.DT_CADASTRO_PRODUTO,
+        createdAt: product.DT_CADASTRO_PRODUTO,
         categoryId: product.CATEGORIAPRODUTOID
       }));  
     }
@@ -40,9 +40,9 @@ export class ProductPrismaRepo implements ProductRepository {
             id: product.PRODUTOID,
             description: product.DS_PRODUTO,
             observation: product.OBS_PRODUTO,
-            price: product.VL_VENDA_PRODUTO,
+            saleValue: product.VL_VENDA_PRODUTO,
             status: product.STATUS_PRODUTO as "ACTIVE" | "INACTIVE",
-            createAt: product.DT_CADASTRO_PRODUTO,
+            createdAt: product.DT_CADASTRO_PRODUTO,
             categoryId: product.CATEGORIAPRODUTOID
         }
     }
@@ -55,8 +55,8 @@ export class ProductPrismaRepo implements ProductRepository {
             data: {
                 DS_PRODUTO: productProps.description,
                 OBS_PRODUTO: productProps.observation,
-                VL_VENDA_PRODUTO: productProps.price,
-                DT_CADASTRO_PRODUTO: productProps.createAt,
+                VL_VENDA_PRODUTO: productProps.saleValue,
+                DT_CADASTRO_PRODUTO: productProps.createdAt,
                 STATUS_PRODUTO: productProps.status,
                 CATEGORIA: {
                     connect:{
