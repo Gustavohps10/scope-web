@@ -1,9 +1,9 @@
 export type BudgetItemDTO = {
-    id: number
+    id?: number
     budgetId: number
     productId: number
     productDescription: string
     productAmount: number
     unitPrice: number
-    totalPrice: number
+    totalPrice?: number
 }
