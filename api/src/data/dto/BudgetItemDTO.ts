@@ -1,4 +1,4 @@
-export type BudgetItem = {
+export type BudgetItemDTO = {
     id: number
     budgetId: number
     productId: number
