@@ -24,9 +24,10 @@ export class BudgetItemPrismaRepo implements BudgetItemRepository{
         });
     }
 
-    async removeItems(productIdsToDelete: number[]): Promise<void>{
+    async removeItems(productIdsToDelete: number[], budgetId: number): Promise<void>{
         await prisma.orcamento_item.deleteMany({
             where: {
+                ORCAMENTOID: budgetId,
                 PRODUTOID: {
                     in: productIdsToDelete
                 }
@@ -63,7 +64,8 @@ export class BudgetItemPrismaRepo implements BudgetItemRepository{
 
         let budgetTotalValue = 0;
         budgetItems.forEach(item => budgetTotalValue += item.VL_TOTAL)
-
+        console.log(budgetTotalValue);
+        
         await prisma.orcamento.update({
             data:{
                 VL_TOTAL_ORCAMENTO: budgetTotalValue

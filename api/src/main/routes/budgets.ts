@@ -6,6 +6,7 @@ import { makeFindBudgetByIdController } from "../factories/makeFindBudgetByIdCon
 import { makeUpdateBudgetController } from "../factories/makeUpdateBudgetController"
 import { makeDeleteBudgetController } from "../factories/makeDeleteBudgetController"
 import { makeAddBudgetItemsController } from "../factories/makeAddBudgetItemsController"
+import { makeRemoveBudgetItemsController } from "../factories/makeRemoveBudgetItemsController"
 
 export default (router: Router) =>{
     router.get('/budgets', adaptRoute(makeFindAllBudgetsController()))
@@ -14,4 +15,5 @@ export default (router: Router) =>{
     router.put('/budgets', adaptRoute(makeUpdateBudgetController()))
     router.delete('/budgets/:id', adaptRoute(makeDeleteBudgetController()))
     router.post('/budgets/:id/items', adaptRoute(makeAddBudgetItemsController()))
+    router.delete('/budgets/:id/items', adaptRoute(makeRemoveBudgetItemsController()))
 }
