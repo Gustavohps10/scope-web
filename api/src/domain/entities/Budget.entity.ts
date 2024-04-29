@@ -1,7 +1,7 @@
 export type BudgetProps = {
     customerId: number;
     totalValue: number;
-    expiresAt: Date;
+    expiresIn: Date;
     createdAt: Date;
 }
 
@@ -19,8 +19,8 @@ export class Budget {
         this.totalValue =  totalValue;
     };
 
-    updateExpiresAt(expiresAt: Date){
-        this.expiresAt = expiresAt;
+    updateexpiresIn(expiresIn: Date){
+        this.expiresIn = expiresIn;
     }
 
     get customerId(){
@@ -39,12 +39,12 @@ export class Budget {
         this.props.totalValue = totalValue
     }
 
-    get expiresAt(){
-        return this.props.expiresAt;
+    get expiresIn(){
+        return this.props.expiresIn;
     }
 
-    private set expiresAt(expiresAt: Date){
-        this.props.expiresAt = expiresAt
+    private set expiresIn(expiresIn: Date){
+        this.props.expiresIn = expiresIn
     }
 
     get createdAt(){
