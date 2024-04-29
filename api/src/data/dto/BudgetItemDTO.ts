@@ -5,5 +5,5 @@ export type BudgetItemDTO = {
     productDescription: string
     productAmount: number
     unitPrice: number
-    totalPrice?: number
+    totalPrice: number
 }
