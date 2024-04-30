@@ -6,9 +6,7 @@ import bcrypt from "bcrypt"
 export class CreateUserService implements CreateUserUseCase{
     constructor(private readonly userRepository: UserRepository){}
 
-    async execute(input: CreateUserInput): Promise<void>{
-        console.log("senha " +input.password);
-        
+    async execute(input: CreateUserInput): Promise<void>{ 
         const user = new User({
             ...input,
             password: await bcrypt.hash(input.password, 10)

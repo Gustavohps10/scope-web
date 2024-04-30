@@ -1,5 +1,5 @@
 import { Controller } from "../../presentation/contracts/controller"
-import { CreateUserService } from "../../data/services/createUser.service";
+import { CreateUserService } from "../../data/services/createUser.service"; 
 import { UserPrismaRepo } from "../../infra/repositories/PrismaRepo/User.prismarepo";
 import { CreateUserController } from "../../presentation/controllers/CreateUserController";
 
