@@ -1,15 +1,18 @@
 import { User } from "../../domain/entities/User.entity";
 import { CreateUserInput, CreateUserUseCase } from "../../domain/useCases/createUser.usecase";
+import { CrypterRepository } from "../contracts/crypterRepository";
 import { UserRepository } from "../contracts/userRepository";
-import bcrypt from "bcrypt"
 
 export class CreateUserService implements CreateUserUseCase{
-    constructor(private readonly userRepository: UserRepository){}
+    constructor(
+        private readonly userRepository: UserRepository,
+        private readonly crypterRepository: CrypterRepository
+    ){}
 
     async execute(input: CreateUserInput): Promise<void>{ 
         const user = new User({
             ...input,
-            password: await bcrypt.hash(input.password, 10)
+            password: await this.crypterRepository.crypt(input.password)
         });
         return await this.userRepository.insert(user);
     }
