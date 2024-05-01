@@ -10,10 +10,9 @@ export class CreateUserService implements CreateUserUseCase{
     ){}
 
     async execute(input: CreateUserInput): Promise<void>{ 
-        const user = new User({
-            ...input,
-            password: await this.crypterRepository.crypt(input.password)
-        });
-        return await this.userRepository.insert(user);
+        const user = new User(input);
+        const cryptPassword = await this.crypterRepository.crypt(input.password);
+        user.updatePassword(cryptPassword);
+        return this.userRepository.insert(user);
     }
 }
