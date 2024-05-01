@@ -35,14 +35,14 @@ model produto {
 model cliente {
   CLIENTEID        Int         @id @default(autoincrement())
   TIPO_CLIENTE     String      @db.Char(1)
-  CPF_CNPJ_CLIENTE String      @db.VarChar(18)
+  CPF_CNPJ_CLIENTE String      @db.VarChar(18) @unique
   NOME_CLIENTE     String      @db.VarChar(100)
   ORCAMENTO        orcamento[]
 }
 
 model usuarios {
   ID            Int    @id @default(autoincrement())
-  USUARIO       String @db.VarChar(30)
+  USUARIO       String @db.VarChar(30) @unique
   NOME_COMPLETO String @db.VarChar(60)
   SENHA         String @db.VarChar(255)
 }
