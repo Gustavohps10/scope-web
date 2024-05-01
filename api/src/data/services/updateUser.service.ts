@@ -1,16 +1,18 @@
 import { User } from "../../domain/entities/User.entity";
 import { UpdateUserInput, UpdateUserUseCase } from "../../domain/useCases/updateUser.usecase";
+import { CrypterRepository } from "../contracts/crypterRepository";
 import { UserRepository } from "../contracts/userRepository";
 
 export class UpdateUserService implements UpdateUserUseCase {
-    constructor(private readonly userRepo: UserRepository){}
+    constructor(
+        private readonly userRepo: UserRepository,
+        private readonly crypterRepository: CrypterRepository
+    ){}
 
-    async execute(input: UpdateUserInput, id: number): Promise<void> {
-        // const userProps = await this.userRepo.findById(id);
-        // const user = new User(userProps);
-        // user.updateEmail(input.email);
-        // user.updateName(input.name);
-        // user.updatePassword(input.password);
-        return this.userRepo.edit({...input, id});
+    async execute(input: UpdateUserInput): Promise<void> {
+        const user = new User(input);
+        const cryptPassword = await this.crypterRepository.crypt(input.password);
+        user.updatePassword(cryptPassword);
+        return this.userRepo.edit(user);
     }
 }

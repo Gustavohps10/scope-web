@@ -8,11 +8,13 @@ export class UpdateUserController implements Controller{
     async handle(req: HttpRequest): Promise<HttpResponse>{
         try {
             const userProps = {
+                id: Number(req.params.id),
                 name: req.body.name,
                 email: req.body.email,
                 password: req.body.password
             }
-            await this.updateUser.execute(userProps, req.body.id); 
+            
+            await this.updateUser.execute(userProps); 
             return ok();
         } catch (error) {
             return serverError(error);

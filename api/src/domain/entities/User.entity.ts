@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const UserSchema = z.object({
-    id: z.number().optional(),
+    id: z.number().int().optional(),
     name: z.string().min(3),
     email: z.string().email(),
     password: z.string().min(1),
@@ -11,7 +11,7 @@ export type UserProps = z.infer<typeof UserSchema>
 
 export class User {
     constructor(public props: UserProps){
-        UserSchema.parse(props)
+        UserSchema.parse(props);
     };
 
     updateName(name: string){
@@ -25,6 +25,15 @@ export class User {
     updatePassword(password: string){
         this.password = password
     }
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
+    }
+
 
     get name(){
         return this.props.name;
