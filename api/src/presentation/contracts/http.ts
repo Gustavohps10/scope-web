@@ -1,4 +1,12 @@
-import { z } from "zod";
+export type HttpError = {
+    httpCode: number
+    errorMessage: string
+    errors: {
+        code?: string
+        path?: (string | number)[]
+        message: string
+    }[]
+}
 
 export type HttpResponse<T = any>  = {
     statusCode: number;
@@ -7,23 +15,12 @@ export type HttpResponse<T = any>  = {
 
 export type HttpRequest = any
 
-export const ok = (data: any = {}): HttpResponse =>({
-    statusCode: 200,
+export const ok = (data: any = {}, httpCode = 200): HttpResponse =>({
+    statusCode: httpCode,
     data: data
 })
 
-export const serverError = (error: unknown, statusCode: number = 500): HttpResponse => {
-    if (error instanceof z.ZodError) {
-        return {
-            statusCode: statusCode,
-            data: {
-                errors: error.issues
-            }
-        }
-    }
-    return {
-        statusCode: statusCode,
-        data: error instanceof Error ? error.message : "Unknown error"
-    }
-    
-}
+export const serverError = (data: HttpError, httpCode = 500): HttpResponse => ({
+    statusCode: httpCode,
+    data: data
+})
