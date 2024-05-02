@@ -7,15 +7,11 @@ export class FindProductCategoryController implements Controller {
     constructor(private readonly findProductCategoryById: FindProductCategoryByIdUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse<ProductCategoryViewModel>>{
-        try {
-            const productCategory = await this.findProductCategoryById.execute(req.params.id);
-            const viewModel = {
-                id: productCategory.id,
-                description: productCategory.description
-            }
-            return ok(viewModel);
-        } catch (error) {
-            return serverError(error);
+        const productCategory = await this.findProductCategoryById.execute(req.params.id);
+        const viewModel = {
+            id: productCategory.id,
+            description: productCategory.description
         }
+        return ok(viewModel);
     }
 } 

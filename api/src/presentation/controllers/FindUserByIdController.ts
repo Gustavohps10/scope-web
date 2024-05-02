@@ -7,7 +7,6 @@ export class FindUserByIdController implements Controller{
     constructor(private readonly findUserById: FindUserByIdUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse<UserViewModel>>{
-        try {
             const id = req.params.id as number;
             const user = await this.findUserById.execute(id);
             const viewModel = {
@@ -16,9 +15,5 @@ export class FindUserByIdController implements Controller{
                 email: user.email
             }
             return ok(viewModel);
-        } catch (error) {
-            return serverError(error);
-        }
-
     }
 }

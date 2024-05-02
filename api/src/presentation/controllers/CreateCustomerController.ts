@@ -6,16 +6,12 @@ export class CreateCustomerController implements Controller {
     constructor(private readonly createCustomer: CreateCustomerUseCase){}
     
     async handle(req: HttpRequest): Promise<HttpResponse>{
-        try {
-            const customerProps = {
-                name: req.body.name,
-                cpfcnpj: req.body.cpfcnpj,
-                customerType: req.body.customerType
-            }
-            await this.createCustomer.execute(customerProps);
-            return ok();
-        } catch (error) {
-            return serverError(error)
+        const customerProps = {
+            name: req.body.name,
+            cpfcnpj: req.body.cpfcnpj,
+            customerType: req.body.customerType
         }
+        await this.createCustomer.execute(customerProps);
+        return ok();
     }
 }

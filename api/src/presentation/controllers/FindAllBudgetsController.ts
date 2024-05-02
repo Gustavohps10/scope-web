@@ -7,14 +7,10 @@ export class FindAllBudgetsController implements Controller {
     constructor(private readonly findAllBudgets: FindAllBudgetsUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse<BudgetViewModel[]>>{
-        try {
-            const budgets = await this.findAllBudgets.execute();
-            const viewModel = budgets.map(budget => ({
-                ...budget
-            }));
-            return ok(viewModel);
-        } catch (error) {
-            return serverError(error);
-        }
+        const budgets = await this.findAllBudgets.execute();
+        const viewModel = budgets.map(budget => ({
+            ...budget
+        }));
+        return ok(viewModel);
     }
 }
