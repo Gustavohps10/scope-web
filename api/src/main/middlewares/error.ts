@@ -1,11 +1,11 @@
-import { Prisma } from "@prisma/client";
 import { NextFunction, Request, Response } from "express";
 import { z } from "zod";
-import { HttpError, serverError } from "../../presentation/contracts/http";
+import { PrismaError } from "../helpers/PrismaError";
+import { HttpError } from "../../presentation/contracts/http";
 
 export const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
     const httpResponse = handleError(error);
-    return res.status(httpResponse.httpCode).json(httpResponse);
+    return res.status(500).json(httpResponse);
 }
 
 const handleError = (error: Error): HttpError => {
@@ -20,20 +20,14 @@ const handleError = (error: Error): HttpError => {
             }))
         }
     }
-
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-        if (error.code == "P2025"){
-            return {
-                httpCode: 500,
-                errorMessage: "Record not found",
-                errors: [
-                    {
-                        message: error.message,
-                    }
-                ]
-            }
+    
+    if (error instanceof PrismaError){
+        return {
+            httpCode: 400,
+            errorMessage: error.message,
+            errors: [{message: error.errorMessage}]
+            
         }
-        
     }
 
     return {

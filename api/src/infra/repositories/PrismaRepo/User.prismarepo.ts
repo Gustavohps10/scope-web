@@ -1,6 +1,7 @@
 import { UserRepository } from "../../../data/contracts/userRepository";
 import { UserDTO } from "../../../data/dto/UserDTO";
 import { PrismaClient } from "@prisma/client";
+import { PrismaError } from "../../../main/helpers/PrismaError";
 const prisma = new PrismaClient()
 
 export class UserPrismaRepo implements UserRepository {
@@ -40,16 +41,20 @@ export class UserPrismaRepo implements UserRepository {
     }
 
     async edit(userProps: UserDTO): Promise<void> {
-        await prisma.usuarios.update({
-            data: {
-                NOME_COMPLETO: userProps.name,
-                USUARIO: userProps.email,
-                SENHA: userProps.password
-            },
-            where: {
-                ID: userProps.id
-            }
-        })
+        try {
+            await prisma.usuarios.update({
+                data: {
+                    NOME_COMPLETO: userProps.name,
+                    USUARIO: userProps.email,
+                    SENHA: userProps.password
+                },
+                where: {
+                    ID: userProps.id
+                }
+            })
+        } catch (error) {
+            throw new PrismaError(error, "Falha ao atualizar usuario", "user")
+        }
     }
 
     async delete(id: number): Promise<void> {
