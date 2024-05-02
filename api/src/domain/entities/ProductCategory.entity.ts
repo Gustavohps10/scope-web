@@ -1,15 +1,27 @@
-export type ProductCategoryProps = {
-    description: string
-}
+import { z } from "zod";
+
+const ProductCategoryShema = z.object({
+    id: z.number().int().optional(),
+    description: z.string().min(2)
+})
+
+export type ProductCategoryProps = z.infer<typeof ProductCategoryShema>
 
 export class ProductCategory {
-    public readonly id?: number;
-    constructor(public props: ProductCategoryProps, id?: number){
-        this.id = id || undefined
+    constructor(public props: ProductCategoryProps){
+        ProductCategoryShema.parse(props)
     };
 
     updateDescription(description: string){
         this.description = description
+    }
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
     }
 
     get description(){
