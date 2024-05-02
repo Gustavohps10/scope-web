@@ -5,7 +5,7 @@ import { HttpError } from "../../presentation/contracts/http";
 
 export const errorMiddleware = (error: Error, req: Request, res: Response, next: NextFunction) => {
     const httpResponse = handleError(error);
-    return res.status(500).json(httpResponse);
+    return res.status(httpResponse.httpCode).json(httpResponse);
 }
 
 const handleError = (error: Error): HttpError => {
@@ -23,10 +23,9 @@ const handleError = (error: Error): HttpError => {
     
     if (error instanceof PrismaError){
         return {
-            httpCode: 400,
+            httpCode: error.statusCode,
             errorMessage: error.message,
             errors: [{message: error.errorMessage}]
-            
         }
     }
 

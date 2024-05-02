@@ -1,5 +1,11 @@
 import { Prisma } from "@prisma/client";
 
+type ErrorMap = {
+    statusCode: number,
+    prismaCode?: string,
+    message: string
+}
+
 export class PrismaError extends Error {
     public message: string;
     public readonly entity?: string
@@ -11,41 +17,52 @@ export class PrismaError extends Error {
         this.entity = entity;
         this.message = message
 
-        const codeMap = this.handleMapper(error)
-        this.errorMessage = codeMap.message
-        this.statusCode = codeMap.statusCode
+        const errorMap = this.handleError(error)
+        this.errorMessage = errorMap.message
+        this.statusCode = errorMap.statusCode
     }
 
-    private handleMapper(error: unknown): CodeMap{
+    private handleError(error: unknown): ErrorMap{
         if(error instanceof Prisma.PrismaClientKnownRequestError){
-            return CodeMapper.find(prismaCode => error.code == prismaCode.prismaCode) || CodeMapper[0] // Defalut  
+            return this.prismaErrorMapper(this.entity).find(prismaCode => error.code == prismaCode.prismaCode) || this.prismaErrorMapper()[0] // Defalut  
         }
+
+        if(error instanceof Prisma.PrismaClientUnknownRequestError){
+            return {
+                statusCode: 500,
+                message: "Unknown request error" 
+            }
+        }
+
+        if(error instanceof Prisma.PrismaClientValidationError){
+            return {
+                statusCode: 422,
+                message: "Validation error"
+            }
+        }
+
         return {
             statusCode: 500,
-            message: "Unknown error"
+            message: error instanceof Error ? error.name : "fasd"
         }
     }
-}
 
-type CodeMap = {
-    statusCode: number,
-    prismaCode?: string,
-    message: string
-}
-
-const CodeMapper: CodeMap[] = [
-    {
-        statusCode: 500,
-        message: "Unknown Prisma error"
-    },
-    {
-        statusCode: 404,
-        prismaCode: "P2025",
-        message: "Record not found"
-    },
-    {
-        statusCode: 409,
-        prismaCode: "P2002",
-        message: "Record already exists"
+    private prismaErrorMapper(entity?: string): ErrorMap[]{
+        return [
+            {
+                statusCode: 500,
+                message: "Unknown Prisma error"
+            },
+            {
+                statusCode: 404,
+                prismaCode: "P2025",
+                message: `${entity} not found`
+            },
+            {
+                statusCode: 409,
+                prismaCode: "P2002",
+                message: `${entity} already exists`
+            }
+        ]
     }
-]
+}
