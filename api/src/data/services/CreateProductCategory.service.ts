@@ -6,9 +6,7 @@ export class CreateProductCategoryService implements CreateProductCategoryUseCas
     constructor(private readonly productCategoryRepo: ProductCategoryRepository){}
 
     async execute(input: CreateProductCategoryInput): Promise<void>{
-        const category = new ProductCategory({
-            description: input.description
-        });
+        const category = new ProductCategory(input);
         return this.productCategoryRepo.insert(category);
     }
 }
