@@ -11,8 +11,8 @@ export const errorMiddleware = (error: Error, req: Request, res: Response, next:
 const handleError = (error: Error): HttpError => {
     if (error instanceof z.ZodError) {
         return {
-            httpCode: 123123,
-            errorMessage: "FAIL",
+            httpCode: 422,
+            errorMessage: "Validation error",
             errors: error.issues.map(issue => ({
                 message: issue.message,
                 path: issue.path,
@@ -24,8 +24,8 @@ const handleError = (error: Error): HttpError => {
     if (error instanceof Prisma.PrismaClientKnownRequestError) {
         if (error.code == "P2025"){
             return {
-                httpCode: 234,
-                errorMessage: "Fail to update record",
+                httpCode: 500,
+                errorMessage: "Record not found",
                 errors: [
                     {
                         message: error.message,
