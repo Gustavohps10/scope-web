@@ -6,7 +6,7 @@ import { HttpRequest, HttpResponse, ok, serverError } from "../contracts/http";
 export class UpdateUserController implements Controller{
     constructor(private readonly updateUser: UpdateUserUseCase){}
 
-    async handle(req: HttpRequest, next: Function): Promise<HttpResponse>{
+    async handle(req: HttpRequest): Promise<HttpResponse>{
         const userProps = {
             id: Number(req.params.id),
             name: req.body.name,
