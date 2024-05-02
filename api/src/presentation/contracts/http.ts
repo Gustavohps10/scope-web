@@ -1,3 +1,13 @@
+export type HttpError = {
+    httpCode: number
+    errorMessage: string
+    errors: {
+        code?: string
+        path?: (string | number)[]
+        message: string
+    }[]
+}
+
 export type HttpResponse<T = any>  = {
     statusCode: number;
     data: T;
@@ -5,12 +15,12 @@ export type HttpResponse<T = any>  = {
 
 export type HttpRequest = any
 
-export const ok = (data: any = {}): HttpResponse =>({
-    statusCode: 200,
+export const ok = (data: any = {}, httpCode = 200): HttpResponse =>({
+    statusCode: httpCode,
     data: data
 })
 
-export const serverError = (error: unknown): HttpResponse => ({
-    statusCode: 500,
-    data: error instanceof Error ? error.message : "Unknown error"
+export const serverError = (data: HttpError, httpCode = 500): HttpResponse => ({
+    statusCode: httpCode,
+    data: data
 })

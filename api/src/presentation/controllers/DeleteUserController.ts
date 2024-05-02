@@ -6,12 +6,8 @@ export class DeleteUserController implements Controller {
     constructor(private readonly deleteUser: DeleteUserUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
-        try {
-            const id = req.params.id as number;
-            await this.deleteUser.execute(id);
-            return ok();
-        } catch (error) {
-            return serverError(error);
-        }
+        const id = req.params.id as number;
+        await this.deleteUser.execute(id);
+        return ok();
     }
 }

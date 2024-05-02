@@ -7,17 +7,13 @@ export class FindCustomerByIdController implements Controller {
     constructor(private readonly findCustomerById: FindCustomerByIdUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse<CustomerViewModel>>{
-        try {
-            const customer = await this.findCustomerById.execute(req.params.id);
-            const viewModel = {
-                id: customer.id,
-                name: customer.name,
-                cpfcnpj: customer.cpfcnpj,
-                customerType: customer.customerType,
-            }
-            return ok(viewModel);
-        } catch (error) {
-            return serverError(error);
+        const customer = await this.findCustomerById.execute(req.params.id);
+        const viewModel = {
+            id: customer.id,
+            name: customer.name,
+            cpfcnpj: customer.cpfcnpj,
+            customerType: customer.customerType,
         }
+        return ok(viewModel);
     }
 }

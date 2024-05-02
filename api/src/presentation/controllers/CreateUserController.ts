@@ -8,16 +8,12 @@ export class CreateUserController implements Controller{
     ){}
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
-        try {
-            await this.createUser.execute({
-                name: req.body.name,
-                email: req.body.email,
-                password: req.body.password
-            });
+        await this.createUser.execute({
+            name: req.body.name,
+            email: req.body.email,
+            password: req.body.password
+        });
 
-            return ok()            
-        } catch (error) {
-            return serverError(error)
-        }
+        return ok()            
     }
 }

@@ -6,11 +6,7 @@ export class DeleteProductCategoryController implements Controller{
     constructor(private readonly deleteProductCategory: DeleteProductCategoryUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
-        try {
-            await this.deleteProductCategory.execute(req.params.id)
-            return ok()
-        } catch (error) {
-            return serverError(error)
-        }
+        await this.deleteProductCategory.execute(req.params.id)
+        return ok()
     }
 }

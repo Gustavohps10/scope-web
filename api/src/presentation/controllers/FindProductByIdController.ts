@@ -7,20 +7,16 @@ export class FindProductByIdController implements Controller{
     constructor(private readonly findProductById: FindProductByIdUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse<ProductViewModel>>{
-        try {
-            const product = await this.findProductById.execute(req.params.id);
-            const viewModel = {
-                id: product.id,
-                description: product.description,
-                observation: product.observation,
-                saleValue: product.saleValue,
-                createdAt: product.createdAt,
-                status: product.status,
-                categoryId: product.categoryId
-            }
-            return ok(viewModel);
-        } catch (error) {
-            return serverError(error);
+        const product = await this.findProductById.execute(req.params.id);
+        const viewModel = {
+            id: product.id,
+            description: product.description,
+            observation: product.observation,
+            saleValue: product.saleValue,
+            createdAt: product.createdAt,
+            status: product.status,
+            categoryId: product.categoryId
         }
+        return ok(viewModel);
     }
 }

@@ -10,6 +10,6 @@ export default (router: Router): void =>{
     router.get('/users', adaptRoute(makeFindAllUsersController()))
     router.get('/users/:id', adaptRoute(makeFindUserByIdController()))
     router.post('/users', adaptRoute(makeCreateUserController()))
-    router.put('/users', adaptRoute(makeUpdateUserController()))
+    router.put('/users/:id', adaptRoute(makeUpdateUserController()))
     router.delete('/users/:id', adaptRoute(makeDeleteUserController()))
 }
