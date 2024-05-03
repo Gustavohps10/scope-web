@@ -3,10 +3,10 @@ import { z } from "zod";
 const ProductSchema = z.object({
     id: z.number().int().optional(),
     categoryId: z.number().int(),
-    description: z.string().min(5),
-    observation: z.string().min(5),
+    description: z.string().min(5).max(50),
+    observation: z.string().min(5).max(300),
     saleValue: z.number(),
-    status: z.union([z.literal('ACTIVE'),z.literal('INACTIVE')]),
+    status: z.enum(["ACTIVE", "INACTIVE"]),
     createdAt: z.date()
 })
 
