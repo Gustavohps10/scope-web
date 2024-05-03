@@ -43,7 +43,7 @@ export class PrismaError extends Error {
 
         return {
             statusCode: 500,
-            message: error instanceof Error ? error.name : "fasd"
+            message: error instanceof Error ? error.name : "Unknown error"
         }
     }
 

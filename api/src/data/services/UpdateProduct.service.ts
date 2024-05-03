@@ -5,8 +5,8 @@ import { ProductRepository } from "../contracts/productRepository";
 export class UpdateProductService implements UpdateProductUseCase{
     constructor(private readonly productRepo: ProductRepository){}
 
-    async execute(input: UpdateProductInput, id: number): Promise<void>{
-        const product = new Product(input, id);
+    async execute(input: UpdateProductInput): Promise<void>{
+        const product = new Product(input);
         return this.productRepo.edit(product);
     }
 }

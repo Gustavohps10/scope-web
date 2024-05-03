@@ -10,6 +10,6 @@ export default (router: Router) =>{
     router.get('/products', adaptRoute(makeFindAllProductsController()))
     router.get('/products/:id', adaptRoute(makeFindProductByIdController()))
     router.post('/products', adaptRoute(makeCreateProductController()))
-    router.put('/products', adaptRoute(makeUpdateProductController()))
+    router.put('/products/:id', adaptRoute(makeUpdateProductController()))
     router.delete('/products/:id', adaptRoute(makeDeleteProductController()))
 }
