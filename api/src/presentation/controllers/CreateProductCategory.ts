@@ -6,9 +6,10 @@ export class CreateProductCategoryController implements Controller {
     constructor(private readonly createProductCategory: CreateProductCategoryUseCase){}
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
-        await this.createProductCategory.execute({
+        const productCategoryProps = {
             description: req.body.description
-        });
+        }
+        await this.createProductCategory.execute(productCategoryProps);
         return ok();
     }
 }

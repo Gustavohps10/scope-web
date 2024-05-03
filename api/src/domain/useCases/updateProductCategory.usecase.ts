@@ -1,7 +1,8 @@
 export interface UpdateProductCategoryUseCase {
-    execute: (input: UpdateProductCategoyInput, id:number)=> Promise<void>
+    execute: (input: UpdateProductCategoyInput)=> Promise<void>
 }
 
 export type UpdateProductCategoyInput = {
+    id: number
     description: string
 }
