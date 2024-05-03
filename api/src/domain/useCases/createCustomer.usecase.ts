@@ -5,5 +5,5 @@ export interface CreateCustomerUseCase {
 export type CreateCustomerInput = {
     name: string
     cpfcnpj: string
-    customerType: string
+    customerType: "F" | "J"
 }

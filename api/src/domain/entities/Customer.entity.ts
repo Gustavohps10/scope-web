@@ -1,13 +1,18 @@
-export type CustomerProps = {
-    name: string;
-    cpfcnpj: string;
-    customerType: string;
-}
+import { z } from "zod";
+
+const CustomerSchema = z.object({
+    id: z.number().int().optional(),
+    name: z.string(),
+    cpfcnpj: z.string().min(11).max(18).regex(new RegExp(/([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/)),
+    customerType: z.enum(["F", "J"])
+})
+
+export type CustomerProps = z.infer<typeof CustomerSchema>
 
 export class Customer {
-    public readonly id?: number;
-    constructor(public props: CustomerProps, id?: number){
-        this.id = id || undefined
+
+    constructor(public props: CustomerProps){
+        CustomerSchema.parse(props)
     };
 
     updateName(name: string){
@@ -18,8 +23,16 @@ export class Customer {
         this.cpfcnpj = cpfcnpj;
     }
     
-    updateCustomerType(customerType: string){
+    updateCustomerType(customerType: "F" | "J"){
         this.customerType = customerType
+    }
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
     }
 
     get name(){
@@ -42,7 +55,7 @@ export class Customer {
         return this.props.customerType
     }
 
-    private set customerType(customerType: string){
+    private set customerType(customerType: "F" | "J"){
         this.props.customerType = customerType
     }
 }

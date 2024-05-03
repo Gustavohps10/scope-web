@@ -6,7 +6,10 @@ export class CreateCustomerService implements CreateCustomerUseCase {
     constructor(private readonly customerRepo: CustomerRepository){}
 
     async execute(input: CreateCustomerInput){
-        const customer = new Customer(input);
+        const customer = new Customer({
+            ...input,
+            cpfcnpj: input.cpfcnpj.replace(/[^\d]+/g,'')
+        });
         return this.customerRepo.insert(customer);
     }
 }
