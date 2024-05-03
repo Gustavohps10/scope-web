@@ -1,8 +1,9 @@
 export interface UpdateProductUseCase {
-    execute: (input: UpdateProductInput, id: number) => Promise<void>
+    execute: (input: UpdateProductInput) => Promise<void>
 }
 
 export type UpdateProductInput = {
+    id: number
     description: string
     observation: string
     saleValue: number

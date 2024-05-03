@@ -8,6 +8,7 @@ export class UpdateProductController implements Controller{
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
         const productProps = {
+            id: Number(req.params.id),
             description: req.body.description,
             observation: req.body.observation,
             saleValue: req.body.saleValue,
@@ -15,7 +16,7 @@ export class UpdateProductController implements Controller{
             createdAt: new Date(),
             categoryId: req.body.categoryId,
         }
-        await this.updateProduct.execute(productProps, req.body.id);
+        await this.updateProduct.execute(productProps);
         return ok();
     }
 }
