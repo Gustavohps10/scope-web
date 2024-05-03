@@ -1,4 +1,4 @@
-import { CreateCustomerUseCase } from "../../domain/useCases/CreateCustomer.usecase";
+import { CreateCustomerUseCase } from "../../domain/useCases/createCustomer.usecase";
 import { Controller } from "../contracts/controller";
 import { HttpRequest, HttpResponse, ok, serverError } from "../contracts/http";
 
