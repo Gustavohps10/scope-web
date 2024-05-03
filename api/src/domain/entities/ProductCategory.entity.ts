@@ -2,7 +2,7 @@ import { z } from "zod";
 
 const ProductCategoryShema = z.object({
     id: z.number().int().optional(),
-    description: z.string().min(2)
+    description: z.string().min(2).max(50)
 })
 
 export type ProductCategoryProps = z.infer<typeof ProductCategoryShema>
