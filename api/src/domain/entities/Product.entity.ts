@@ -1,16 +1,20 @@
-export type ProductProps = {
-    categoryId: number;
-    description: string;
-    observation: string;
-    saleValue: number;
-    status: "ACTIVE" | "INACTIVE";
-    createdAt: Date;
-}
+import { z } from "zod";
+
+const ProductSchema = z.object({
+    id: z.number().int().optional(),
+    categoryId: z.number().int(),
+    description: z.string().min(5),
+    observation: z.string().min(5),
+    saleValue: z.number(),
+    status: z.union([z.literal('ACTIVE'),z.literal('INACTIVE')]),
+    createdAt: z.date()
+})
+
+export type ProductProps = z.infer<typeof ProductSchema>
 
 export class Product {
-    public readonly id?: number;
-    constructor(public props: ProductProps, id?: number){
-        this.id = id || undefined
+    constructor(public props: ProductProps){
+        ProductSchema.parse(props)
     };
 
     updateCategory(categoryId: number){
@@ -31,6 +35,14 @@ export class Product {
 
     updateStatus(status: "ACTIVE" | "INACTIVE"){
         this.status = status
+    }
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
     }
 
     get categoryId(){
