@@ -3,7 +3,8 @@ import { z } from "zod";
 const CustomerSchema = z.object({
     id: z.number().int().optional(),
     name: z.string(),
-    cpfcnpj: z.string().min(11).max(18).regex(new RegExp(/([0-9]{2}[\.]?[0-9]{3}[\.]?[0-9]{3}[\/]?[0-9]{4}[-]?[0-9]{2})|([0-9]{3}[\.]?[0-9]{3}[\.]?[0-9]{3}[-]?[0-9]{2})/)),
+    cpfcnpj: z.string()
+    .regex(new RegExp(/(^\d{3}\.\d{3}\.\d{3}\-\d{2}$)|(^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$)/), "value must be in CPF format: 000.000.000-00 or CNPJ format: 00.000.000/0000-00"),
     customerType: z.enum(["F", "J"])
 })
 
