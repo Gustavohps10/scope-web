@@ -10,6 +10,6 @@ export default (router: Router): void =>{
     router.get('/customers', adaptRoute(makeFindAllCustomersController()))
     router.get('/customers/:id', adaptRoute(makeFindCustomerByIdController()))
     router.post('/customers', adaptRoute(makeCreateCustomerController()))
-    router.put('/customers', adaptRoute(makeUpdateCustomerController()))
+    router.put('/customers/:id', adaptRoute(makeUpdateCustomerController()))
     router.delete('/customers/:id', adaptRoute(makeDeleteCustomerController()))
 }

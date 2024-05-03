@@ -1,5 +1,5 @@
 import { Customer } from "../../domain/entities/Customer.entity";
-import { CreateCustomerInput, CreateCustomerUseCase } from "../../domain/useCases/CreateCustomer.usecase";
+import { CreateCustomerInput, CreateCustomerUseCase } from "../../domain/useCases/createCustomer.usecase";
 import { CustomerRepository } from "../contracts/customerRepository";
 
 export class CreateCustomerService implements CreateCustomerUseCase {
