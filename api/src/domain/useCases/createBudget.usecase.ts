@@ -3,8 +3,8 @@ export interface CreateBudgetUseCase {
 }
 
 export type CreateBudgetInput = {
-    createdAt: Date,
-    expiresIn?: Date
-    totalValue: number,
+    createdAt: Date
+    expiresIn?: string
+    totalValue: number
     customerId: number
 }

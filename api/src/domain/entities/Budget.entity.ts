@@ -1,14 +1,17 @@
-export type BudgetProps = {
-    customerId: number;
-    totalValue: number;
-    expiresIn: Date;
-    createdAt: Date;
-}
+import { z } from "zod";
+
+const BudgetSchema = z.object({
+    id: z.number().int().optional(),
+    customerId: z.number().int(),
+    totalValue: z.number(),
+    expiresIn: z.date().refine((expiresIn => expiresIn > new Date()), "expiresIn must be later than the current date"),
+    createdAt: z.date()
+});
+export type BudgetProps = z.infer<typeof BudgetSchema>
 
 export class Budget {
-    public readonly id?: number;
-    constructor(public props: BudgetProps, id?: number){
-        this.id = id || undefined
+    constructor(public props: BudgetProps){
+        BudgetSchema.parse(props);
     };
 
     updateCustomer(customerId: number){
@@ -21,6 +24,14 @@ export class Budget {
 
     updateexpiresIn(expiresIn: Date){
         this.expiresIn = expiresIn;
+    }
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
     }
 
     get customerId(){

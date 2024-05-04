@@ -7,12 +7,13 @@ export class UpdateBudgetController implements Controller {
 
     async handle(req: HttpRequest): Promise<HttpResponse>{
         const BudgetProps = {
+            id: Number(req.params.id),
             createdAt: new Date,
-            expiresIn: new Date(req.body.expiresIn),
+            expiresIn: req.body.expiresIn,
             totalValue: req.body.totalValue,
             customerId: req.body.customerId
         }
-        await this.updateBudget.execute(BudgetProps, req.body.id);
+        await this.updateBudget.execute(BudgetProps);
         return ok();
     }
 }
