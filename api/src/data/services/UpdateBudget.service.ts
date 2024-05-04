@@ -11,7 +11,7 @@ export class UpdateBudgetService implements UpdateBudgetUseCase {
 
         const budgetProps = {
             ...input,
-            expiresIn: input.expiresIn || defaultExpirationDate
+            expiresIn: input.expiresIn ? new Date(input.expiresIn) : defaultExpirationDate
         }
         const budget = new Budget(budgetProps);
         return this.budgetRepo.edit(budget);

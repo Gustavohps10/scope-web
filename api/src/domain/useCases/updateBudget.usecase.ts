@@ -5,7 +5,7 @@ export interface UpdateBudgetUseCase {
 export type UpdateBudgetInput = {
     id: number
     createdAt: Date
-    expiresIn?: Date
+    expiresIn?: string
     totalValue: number
     customerId: number
 }

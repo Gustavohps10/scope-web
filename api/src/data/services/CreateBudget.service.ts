@@ -11,7 +11,7 @@ export class CreateBudgetService implements CreateBudgetUseCase {
 
         const budgetProps = {
             ...input,
-            expiresIn: input.expiresIn || defaultExpirationDate
+            expiresIn: input.expiresIn ? new Date(input.expiresIn) : defaultExpirationDate
         }
         const budget = new Budget(budgetProps);
         return this.budgetRepo.insert(budget);
