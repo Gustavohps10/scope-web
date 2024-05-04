@@ -6,24 +6,27 @@ import { PrismaError } from "../../../main/helpers/PrismaError";
 const prisma = new PrismaClient();
 
 export class BudgetItemPrismaRepo implements BudgetItemRepository{
-    async addItems(items: BudgetItemDTO[]): Promise<void>{
+    async addItems(items: BudgetItemDTO[], budgetId: number): Promise<void> {
         try {
-            await prisma.orcamento_item.createMany({
-                data: items.map((item) => {
-                    if (item.totalPrice === undefined){
-                        throw new Error('Total price is empty');
-                    }
-    
-                    return {
-                        ORCAMENTOID: item.budgetId,
-                        PRODUTOID: item.productId,
-                        PRODUTODESC: item.productDescription,
-                        QT_PRODUTO: item.productAmount,
-                        VL_UNITARIO: item.unitPrice,
-                        VL_TOTAL: item.totalPrice
-                    }
-                })
-            });
+            await prisma.$transaction(async (prisma)=> {
+                await prisma.orcamento_item.createMany({
+                    data: items.map((item) => {
+                        if (item.totalPrice === undefined){
+                            throw new Error('Budget Total value is empty');
+                        }
+        
+                        return {
+                            ORCAMENTOID: budgetId,
+                            PRODUTOID: item.productId,
+                            PRODUTODESC: item.productDescription,
+                            QT_PRODUTO: item.productAmount,
+                            VL_UNITARIO: item.unitPrice,
+                            VL_TOTAL: item.totalPrice
+                        }
+                    })
+                });
+                await this.updateBudgetTotalValue(budgetId);
+            })
         } catch (error) {
             throw new PrismaError(error, "Failed to add items");
         }
@@ -69,27 +72,22 @@ export class BudgetItemPrismaRepo implements BudgetItemRepository{
     }
 
     async updateBudgetTotalValue(budgetId: number): Promise<void>{
-        try {
-            const budgetItems = await prisma.orcamento_item.findMany({
-                where: {
-                    ORCAMENTOID: budgetId
-                }
-            });
-    
-            let budgetTotalValue = 0;
-            budgetItems.forEach(item => budgetTotalValue += item.VL_TOTAL)
-            console.log(budgetTotalValue);
-            
-            await prisma.orcamento.update({
-                data:{
-                    VL_TOTAL_ORCAMENTO: budgetTotalValue
-                },
-                where: {
-                    ORCAMENTOID: budgetId
-                }
-            })
-        } catch (error) {
-            throw new PrismaError(error, "Failed to update Budget total value");
-        }
+        const budgetItems = await prisma.orcamento_item.findMany({
+            where: {
+                ORCAMENTOID: budgetId
+            }
+        });
+
+        let budgetTotalValue = 0;
+        budgetItems.forEach(item => budgetTotalValue += item.VL_TOTAL)
+        
+        await prisma.orcamento.update({
+            data:{
+                VL_TOTAL_ORCAMENTO: budgetTotalValue
+            },
+            where: {
+                ORCAMENTOID: budgetId
+            }
+        })  
     }
 }
