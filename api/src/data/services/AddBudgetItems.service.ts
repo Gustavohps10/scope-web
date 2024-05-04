@@ -11,7 +11,7 @@ export class AddBudgetItemsService implements AddBudgetItemsUseCase{
         const items = inputs.map((input)=>{
             let product = products.find(product => product.id == input.productId);
             if (product === undefined) {
-                throw new Error('Product not found!');
+                throw new Error(`Product ${input.productId} not found`);
             }
 
             let item = new BudgetItem({
@@ -26,6 +26,5 @@ export class AddBudgetItemsService implements AddBudgetItemsUseCase{
         });
 
         await this.budgetItemRepo.addItems(items, budgetId);
-        await this.budgetItemRepo.updateBudgetTotalValue(budgetId);
     }
 }
