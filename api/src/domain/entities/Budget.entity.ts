@@ -4,7 +4,7 @@ const BudgetSchema = z.object({
     id: z.number().int().optional(),
     customerId: z.number().int(),
     totalValue: z.number(),
-    expiresIn: z.date(),
+    expiresIn: z.date().refine((val => val > new Date()), "expiresIn must be greater than the current date"),
     createdAt: z.date()
 });
 export type BudgetProps = z.infer<typeof BudgetSchema>
