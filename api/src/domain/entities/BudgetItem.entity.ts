@@ -1,17 +1,28 @@
-export type BudgetItemProps = {
-    budgetId: number;
-    productId: number;
-    productDescription: string;
-    productAmount: number;
-    unitPrice: number;
-    totalPrice?: number;
-}
+import { z } from "zod";
+const BudgetItemSchema = z.object({
+    id: z.number().int().optional(),
+    budgetId: z.number().int(),
+    productId: z.number().int(),
+    productDescription: z.string().min(1).max(50),
+    productAmount: z.number().min(1),
+    unitPrice: z.number().positive(),
+    totalPrice: z.number().optional()
+})
+export type BudgetItemProps = z.infer<typeof BudgetItemSchema>
 
 export class BudgetItem {
-    public readonly id?: number;
-    constructor(public props: BudgetItemProps, id?: number){
-        this.id = id || undefined
+
+    constructor(public props: BudgetItemProps){
+        BudgetItemSchema.parse(props)
     };
+
+    get id(){
+        return this.props.id;
+    }
+
+    private set id(value: number | undefined) {
+        this.props.id = value;
+    }
 
     get budgetId(){
         return this.props.budgetId;
