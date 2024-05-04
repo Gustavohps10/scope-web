@@ -9,7 +9,7 @@ export class CreateBudgetController implements Controller {
         const BudgetProps = {
             createdAt: new Date,
             expiresIn: req.body.expiresIn,
-            totalValue: req.body.totalValue,
+            totalValue: 0,
             customerId: req.body.customerId
         }
         await this.createBudget.execute(BudgetProps);
