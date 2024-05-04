@@ -1,10 +1,11 @@
 export interface UpdateBudgetUseCase {
-    execute: (input: UpdateBudgetInput, id: number) => Promise<void>
+    execute: (input: UpdateBudgetInput) => Promise<void>
 }
 
 export type UpdateBudgetInput = {
-    createdAt: Date,
+    id: number
+    createdAt: Date
     expiresIn?: Date
-    totalValue: number,
+    totalValue: number
     customerId: number
 }

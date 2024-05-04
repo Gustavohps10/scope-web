@@ -8,7 +8,7 @@ export class CreateBudgetController implements Controller {
     async handle(req: HttpRequest): Promise<HttpResponse>{
         const BudgetProps = {
             createdAt: new Date,
-            expiresIn: new Date(req.body.expiresIn),
+            expiresIn: req.body.expiresIn,
             totalValue: req.body.totalValue,
             customerId: req.body.customerId
         }

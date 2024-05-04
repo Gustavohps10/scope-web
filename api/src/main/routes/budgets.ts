@@ -12,7 +12,7 @@ export default (router: Router) =>{
     router.get('/budgets', adaptRoute(makeFindAllBudgetsController()))
     router.get('/budgets/:id', adaptRoute(makeFindBudgetByIdController()))
     router.post('/budgets', adaptRoute(makeCreateBudgetController()))
-    router.put('/budgets', adaptRoute(makeUpdateBudgetController()))
+    router.put('/budgets/:id', adaptRoute(makeUpdateBudgetController()))
     router.delete('/budgets/:id', adaptRoute(makeDeleteBudgetController()))
     router.post('/budgets/:id/items', adaptRoute(makeAddBudgetItemsController()))
     router.delete('/budgets/:id/items', adaptRoute(makeRemoveBudgetItemsController()))
